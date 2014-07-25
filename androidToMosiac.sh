@@ -19,7 +19,7 @@ fi
 
 
 
-cp -r $project_location /Users/nick/MosaicAndroid/AndroidMosaicSDK/modules/
+cp -r $project_location ~/MosaicAndroid/AndroidMosaicSDK/modules/
 
 
 cp ~/MosaicAndroid/AndroidMosaicSDK/Samples/build.xml ~/MosaicAndroid/AndroidMosaicSDK/modules/$project_name/build.xml
@@ -57,8 +57,20 @@ LANG=C sed -i '' s/"@string\/"/"@string\/"$project_name"_"/g ~/MosaicAndroid/And
 LANG=C sed -i '' s/"@array\/"/"@array\/"$project_name"_"/g ~/MosaicAndroid/AndroidMosaicSDK/modules/$project_name/res/layout/*
 
 
-#LANG=C sed -i '' s/"R.layout."*/"Mosaic.getResId(this, Mosaic.LAYOUT_RESOURCE, "*")/g ~/MosaicAndroid/AndroidMosaicSDK/modules/$project_name/res/layout/*
+LANG=C sed -i '' 's/R.id.\(.*\))/Mosaic.getResId(this, Mosaic.ID_RESOURCE, \"\1\"))/g' ~/MosaicAndroid/AndroidMosaicSDK/modules/$project_name/src/com/*/*/*
 
+LANG=C sed -i '' 's/R.layout.\(.*\))/Mosaic.getResId(this, Mosaic.LAYOUT_RESOURCE, \"\1\"))/g' ~/MosaicAndroid/AndroidMosaicSDK/modules/$project_name/src/com/*/*/*
+
+LANG=C sed -i '' 's/R.menu.\(.*\))/Mosaic.getResId(this, Mosaic.MENU_RESOURCE, \"\1\"))/g' ~/MosaicAndroid/AndroidMosaicSDK/modules/$project_name/src/com/*/*/*
+
+echo "Where is your Android SDK located?"
+read sdk_location
+
+export SDK_DIR=$sdk_location/sdk/
+
+cd ~/MosaicAndroid/AndroidMosaicSDK/modules/$project_name/
+
+ant validate
 
 
 
