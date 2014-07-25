@@ -6,6 +6,7 @@ read project_location
 project_name=${project_location##*/} 
 
 
+cd ~/
 
 if [ ! -d "MosaicAndroid" ]; then
 	curl -L -o AndroidMosaicSDK.zip https://www.dropbox.com/s/azm2i5xw8it153s/AndroidMosaicSDK.zip?dl=1
@@ -38,4 +39,33 @@ for file in ~/MosaicAndroid/AndroidMosaicSDK/modules/$project_name/res/*/*; do
     dest="$dir"/"$prefix""$base"
     mv "$file" "$dest"  # remove "echo" after testing
 done
+
+LANG=C sed -i '' s/"id\/"/"id\/"$project_name"_"/g ~/MosaicAndroid/AndroidMosaicSDK/modules/$project_name/res/*/*
+
+LANG=C sed -i '' s/"name=\""/"name=\""$project_name"_"/g ~/MosaicAndroid/AndroidMosaicSDK/modules/$project_name/res/*/*
+
+
+LANG=C sed -i '' s/"@string\/"/"@string\/"$project_name"_"/g ~/MosaicAndroid/AndroidMosaicSDK/modules/$project_name/AndroidManifest.xml
+
+LANG=C sed -i '' s/"@style\/"/"@style\/"$project_name"_"/g ~/MosaicAndroid/AndroidMosaicSDK/modules/$project_name/AndroidManifest.xml
+
+LANG=C sed -i '' s/"@drawable\/"/"@drawable\/"$project_name"_"/g ~/MosaicAndroid/AndroidMosaicSDK/modules/$project_name/AndroidManifest.xml
+
+
+LANG=C sed -i '' s/"@string\/"/"@string\/"$project_name"_"/g ~/MosaicAndroid/AndroidMosaicSDK/modules/$project_name/res/layout/*
+
+LANG=C sed -i '' s/"@array\/"/"@array\/"$project_name"_"/g ~/MosaicAndroid/AndroidMosaicSDK/modules/$project_name/res/layout/*
+
+
+#LANG=C sed -i '' s/"R.layout."*/"Mosaic.getResId(this, Mosaic.LAYOUT_RESOURCE, "*")/g ~/MosaicAndroid/AndroidMosaicSDK/modules/$project_name/res/layout/*
+
+
+
+
+
+
+
+
+
+
 
