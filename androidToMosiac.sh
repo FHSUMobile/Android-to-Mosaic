@@ -44,6 +44,9 @@ LANG=C sed -i '' s/"id\/"/"id\/"$project_name"_"/g ~/MosaicAndroid/AndroidMosaic
 
 LANG=C sed -i '' s/"name=\""/"name=\""$project_name"_"/g ~/MosaicAndroid/AndroidMosaicSDK/modules/$project_name/res/*/*
 
+#parent references did not get changed. This will probably only work in specific cases. 
+LANG=C sed -i '' s/"parent=\"AppBaseTheme\""/"parent="\"$project_name"_AppBaseTheme\""/g ~/MosaicAndroid/AndroidMosaicSDK/modules/$project_name/res/*/*
+
 
 LANG=C sed -i '' s/"@string\/"/"@string\/"$project_name"_"/g ~/MosaicAndroid/AndroidMosaicSDK/modules/$project_name/AndroidManifest.xml
 
@@ -51,10 +54,13 @@ LANG=C sed -i '' s/"@style\/"/"@style\/"$project_name"_"/g ~/MosaicAndroid/Andro
 
 LANG=C sed -i '' s/"@drawable\/"/"@drawable\/"$project_name"_"/g ~/MosaicAndroid/AndroidMosaicSDK/modules/$project_name/AndroidManifest.xml
 
+#changing next two lines to include all of the res folder
+LANG=C sed -i '' s/"@string\/"/"@string\/"$project_name"_"/g ~/MosaicAndroid/AndroidMosaicSDK/modules/$project_name/res/*/*
 
-LANG=C sed -i '' s/"@string\/"/"@string\/"$project_name"_"/g ~/MosaicAndroid/AndroidMosaicSDK/modules/$project_name/res/layout/*
+LANG=C sed -i '' s/"@array\/"/"@array\/"$project_name"_"/g ~/MosaicAndroid/AndroidMosaicSDK/modules/$project_name/res/*/*
 
-LANG=C sed -i '' s/"@array\/"/"@array\/"$project_name"_"/g ~/MosaicAndroid/AndroidMosaicSDK/modules/$project_name/res/layout/*
+#this is also new, I HAVE NO IDEA WHAT I AM DOING
+LANG=C sed -i '' s/"@dimen\/"/"@dimen\/"$project_name"_"/g ~/MosaicAndroid/AndroidMosaicSDK/modules/$project_name/res/*/*
 
 
 LANG=C sed -i '' 's/R.id.\(.*\))/Mosaic.getResId(this, Mosaic.ID_RESOURCE, \"\1\"))/g' ~/MosaicAndroid/AndroidMosaicSDK/modules/$project_name/src/com/*/*/*
@@ -68,9 +74,23 @@ read sdk_location
 
 export SDK_DIR=$sdk_location/sdk/
 
-cd ~/MosaicAndroid/AndroidMosaicSDK/modules/$project_name/
+#cd ~/MosaicAndroid/AndroidMosaicSDK/modules/$project_name/
+
+cd ~/MosaicAndroid/AndroidMosaicSDK/
 
 ant validate
+
+
+echo "Would you like to try and do a full build? (y/n)" 
+
+read do_a_build
+
+if [ $do_a_build !=  "n" ]; then
+
+	ant
+
+fi
+
 
 
 
