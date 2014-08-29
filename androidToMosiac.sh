@@ -15,7 +15,7 @@ if [ ! -d "MosaicAndroid" ]; then
 	unzip ~/AndroidMosaicSDK
 	rm ~/AndroidMosaicSDK.zip
 	mv "AndroidMosaicSDK 2" "AndroidMosaicSDK"
-fi
+#fi
 
 
 
@@ -34,6 +34,13 @@ cp ~/MosaicAndroid/AndroidMosaicSDK/mosaicsdk-*.jar ~/MosaicAndroid/AndroidMosai
 #this next section of the script I found on the Web!
 prefix=$project_name"_"
 for file in ~/MosaicAndroid/AndroidMosaicSDK/modules/$project_name/res/*/*; do
+    dir=$(dirname "$file")
+    base=$(basename "$file")
+    dest="$dir"/"$prefix""$base"
+    mv "$file" "$dest"  # remove "echo" after testing
+done
+
+for file in ~/MosaicAndroid/AndroidMosaicSDK/modules/$project_name/src/com/FHSUMobile/csa/*; do
     dir=$(dirname "$file")
     base=$(basename "$file")
     dest="$dir"/"$prefix""$base"
@@ -62,12 +69,16 @@ LANG=C sed -i '' s/"@array\/"/"@array\/"$project_name"_"/g ~/MosaicAndroid/Andro
 #this is also new, I HAVE NO IDEA WHAT I AM DOING
 LANG=C sed -i '' s/"@dimen\/"/"@dimen\/"$project_name"_"/g ~/MosaicAndroid/AndroidMosaicSDK/modules/$project_name/res/*/*
 
+#removed end parentheses to fix R.id not being fixed
+LANG=C sed -i '' 's/R.id.\(.*\))/Mosaic.getResId(this, Mosaic.ID_RESOURCE, \"csa_\1\"))/g' ~/MosaicAndroid/AndroidMosaicSDK/modules/$project_name/src/com/*/*/*
 
-LANG=C sed -i '' 's/R.id.\(.*\))/Mosaic.getResId(this, Mosaic.ID_RESOURCE, \"\1\"))/g' ~/MosaicAndroid/AndroidMosaicSDK/modules/$project_name/src/com/*/*/*
+LANG=C sed -i '' 's/R.layout.\(.*\))/Mosaic.getResId(this, Mosaic.LAYOUT_RESOURCE, \"csa_\1\"))/g' ~/MosaicAndroid/AndroidMosaicSDK/modules/$project_name/src/com/*/*/*
 
-LANG=C sed -i '' 's/R.layout.\(.*\))/Mosaic.getResId(this, Mosaic.LAYOUT_RESOURCE, \"\1\"))/g' ~/MosaicAndroid/AndroidMosaicSDK/modules/$project_name/src/com/*/*/*
+LANG=C sed -i '' 's/R.menu.\(.*\))/Mosaic.getResId(this, Mosaic.MENU_RESOURCE, \"csa_\1\"))/g' ~/MosaicAndroid/AndroidMosaicSDK/modules/$project_name/src/com/*/*/*
 
-LANG=C sed -i '' 's/R.menu.\(.*\))/Mosaic.getResId(this, Mosaic.MENU_RESOURCE, \"\1\"))/g' ~/MosaicAndroid/AndroidMosaicSDK/modules/$project_name/src/com/*/*/*
+fi #this was moved to stop unecissary duplication
+
+
 
 echo "Where is your Android SDK located?"
 read sdk_location
