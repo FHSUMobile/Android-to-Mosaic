@@ -1,0 +1,11 @@
+Developer: Nicholas Hoffmann
+
+Here is the low down on what is going on:
+
+This is a bash script that does most of the hard work of converting an Android app to be compatible with Mosaic. It changes most of 
+the file names and fixes a good portion of source dependency changes that are necessary. It also downloads the Mosaic SDK and 
+handles the build process. Everything it generates is put into a folder called MosiacAndroid. Like I said, it takes care of most of 
+the changes that need to be made, but not all. You will have to address some of the errors yourself.
+
+Hope this helps!
+Contact me with any questions you may have.

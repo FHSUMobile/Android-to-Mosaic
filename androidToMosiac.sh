@@ -1,14 +1,17 @@
 #!/bin/bash
 
-echo "Where is your project located?"
-read project_location
 
-project_name=${project_location##*/} 
 
 
 cd ~/
 
 if [ ! -d "MosaicAndroid" ]; then
+	
+	echo "Where is your project located?"
+	read project_location
+
+	project_name=${project_location##*/} 
+	
 	curl -L -o AndroidMosaicSDK.zip https://www.dropbox.com/s/azm2i5xw8it153s/AndroidMosaicSDK.zip?dl=1
 	mkdir MosaicAndroid
 	cd MosaicAndroid 
@@ -84,6 +87,7 @@ echo "Where is your Android SDK located?"
 read sdk_location
 
 export SDK_DIR=$sdk_location/sdk/
+export ANDROID_HOME=$sdk_location/sdk/
 
 #cd ~/MosaicAndroid/AndroidMosaicSDK/modules/$project_name/
 
